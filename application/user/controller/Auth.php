@@ -25,7 +25,9 @@ class Auth extends Controller
     public function create()
     {
         //
-        return view();
+        $token = $this->request->token('__token__','sha1');
+        $this->assign('token',$token);
+        return $this->fetch();
     }
 
     /**
@@ -37,6 +39,14 @@ class Auth extends Controller
     public function save(Request $request)
     {
         //
+        $requestData = $request->post();
+        $result = $this->validate($requestData, 'app\user\validate\Auth');
+        if (true !== $result){
+            dump($request);
+        } else{
+            dump($requestData);
+        }
+        //dump($request->post());
     }
 
     /**
